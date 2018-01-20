@@ -9,8 +9,8 @@ import java.util.List;
  * <p>
  * Serializable implementations should verify the consistency when de-serializing.
  *
- * @param <ID>
- * @param <D>
+ * @param <ID> The identity type
+ * @param <D> The data type (or hash type)
  */
 public interface BlockChain<ID, D> extends List<D>
 {

@@ -8,6 +8,31 @@
     <artifactId>blocks</artifactId>
     <version>0.0.1</version>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>a blockchain building blocks library</description>
+    <url>https://github.com/gsvarovsky/blocks</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>George Svarovsky</name>
+            <email>gsvarovsky@m-ld.org</email>
+            <organizationUrl>https://github.com/gsvarovsky</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/gsvarovsky/blocks.git</connection>
+        <developerConnection>scm:git:ssh://github.com/gsvarovsky/blocks.git</developerConnection>
+        <url>https://github.com/gsvarovsky/blocks</url>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.uuid</groupId>
@@ -33,6 +58,32 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
