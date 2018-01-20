@@ -6,9 +6,7 @@ import org.m_ld.block.Block;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class UuidChainBlockTest
 {
@@ -58,7 +56,7 @@ public class UuidChainBlockTest
         assertNotEquals(genesis.next(2).next(1), genesis.next(1).next(2));
     }
 
-    @Test(timeout = 100)
+    @Test(timeout = 1000)
     public void testPerformance()
     {
         // This is just a smoke test for some crazy mistake

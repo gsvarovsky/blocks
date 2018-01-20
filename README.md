@@ -1,5 +1,9 @@
+[![Build Status](https://travis-ci.org/gsvarovsky/blocks.svg?branch=master)](https://travis-ci.org/gsvarovsky/blocks)
+
 # blocks
 _a blockchain building blocks library_
+
+**[Feedback](https://github.com/gsvarovsky/blocks/issues) and contributions welcome!**
 
 ## usage
 Implement [Block](/src/main/java/org/m_ld/block/Block.java), or use the provided [SHA-256 UUID-based chain block](/src/main/java/org/m_ld/block/uuid/UuidChainBlock.java).
