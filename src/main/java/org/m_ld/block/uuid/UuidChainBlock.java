@@ -3,10 +3,7 @@ package org.m_ld.block.uuid;
 import org.m_ld.block.AbstractBlock;
 import org.m_ld.block.Block;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
@@ -21,15 +18,11 @@ import static com.fasterxml.uuid.Generators.randomBasedGenerator;
  */
 public class UuidChainBlock<D extends Serializable> extends AbstractBlock<UUID, D> implements Serializable
 {
-    private final UUID namespace;
-
-    private static MessageDigest DIGEST;
-
+    private static final MessageDigest DIGEST;
     static
     {
         try
         {
-            // Default digest in JUG is SHA-1, which is too weak for blockchain
             DIGEST = MessageDigest.getInstance("SHA-256");
         }
         catch (NoSuchAlgorithmException e)
@@ -40,37 +33,35 @@ public class UuidChainBlock<D extends Serializable> extends AbstractBlock<UUID, 
 
     public static <D extends Serializable> Block<UUID, D> genesis()
     {
-        return genesis((UUID)null);
+        return new UuidChainBlock<>(randomBasedGenerator().generate(), null);
     }
 
-    public static <D extends Serializable> Block<UUID, D> genesis(String namespace)
-    {
-        return genesis(namespace == null ? null : nameBasedGenerator(null, DIGEST).generate(namespace));
-    }
-
-    private static <D extends Serializable> Block<UUID, D> genesis(UUID namespace)
-    {
-        return new UuidChainBlock<>(randomBasedGenerator().generate(), null, namespace);
-    }
-
-    private UuidChainBlock(UUID id, D data, UUID namespace)
+    private UuidChainBlock(UUID id, D data)
     {
         super(id, data);
-        this.namespace = namespace;
     }
 
     @Override
     public Block<UUID, D> next(D data)
     {
+        return construct(hash(serialize(id(), data)), data);
+    }
+
+    protected Block<UUID, D> construct(UUID newId, D data)
+    {
+        return new UuidChainBlock<>(newId, data);
+    }
+
+    protected byte[] serialize(UUID id, D data)
+    {
         try (final ByteArrayOutputStream bo = new ByteArrayOutputStream();
              final ObjectOutputStream oo = new ObjectOutputStream(bo))
         {
-            oo.writeObject(id());
+            oo.writeObject(id);
             oo.writeObject(data);
             oo.flush();
 
-            return new UuidChainBlock<>(nameBasedGenerator(namespace, DIGEST).generate(bo.toByteArray()),
-                                        data, namespace);
+            return bo.toByteArray();
         }
         catch (IOException e)
         {
@@ -78,13 +69,39 @@ public class UuidChainBlock<D extends Serializable> extends AbstractBlock<UUID, 
         }
     }
 
+    protected UUID hash(byte[] bytes)
+    {
+        return nameBasedGenerator(null, DIGEST).generate(bytes);
+    }
+
     @Override
     public String toString()
     {
-        return "UuidChainBlock{" +
+        return getClass().getSimpleName() + "{" +
             "id=" + id() +
             ", data=" + data() +
-            ", namespace=" + namespace +
             "}";
+    }
+
+    private Object writeReplace() throws ObjectStreamException
+    {
+        return new SerialProxy<>(id(), data());
+    }
+
+    private static class SerialProxy<D extends Serializable> implements Serializable
+    {
+        UUID id;
+        D data;
+
+        SerialProxy(UUID id, D data)
+        {
+            this.id = id;
+            this.data = data;
+        }
+
+        Object readResolve() throws ObjectStreamException
+        {
+            return new UuidChainBlock<>(id, data);
+        }
     }
 }

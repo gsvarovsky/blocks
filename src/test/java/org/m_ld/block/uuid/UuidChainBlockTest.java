@@ -3,6 +3,7 @@ package org.m_ld.block.uuid;
 import org.junit.Test;
 import org.m_ld.block.Block;
 
+import java.io.*;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -14,12 +15,6 @@ public class UuidChainBlockTest
     public void testGenesisBlockIsAlwaysDifferent()
     {
         assertNotEquals(UuidChainBlock.genesis(), UuidChainBlock.genesis());
-    }
-
-    @Test
-    public void testNamespaceGenesisBlockIsAlwaysDifferent()
-    {
-        assertNotEquals(UuidChainBlock.genesis("a"), UuidChainBlock.genesis("a"));
     }
 
     @Test
@@ -61,6 +56,18 @@ public class UuidChainBlockTest
     {
         // This is just a smoke test for some crazy mistake
         assertEquals(100, Stream.iterate(UuidChainBlock.<Integer>genesis().next(0),
-                                  b -> b.next(b.data() + 1)).limit(100).count());
+                                         b -> b.next(b.data() + 1)).limit(100).count());
+    }
+
+    @Test
+    public void testSerializable() throws IOException, ClassNotFoundException
+    {
+        final Block<UUID, Integer> block = UuidChainBlock.<Integer>genesis().next(1);
+        final ByteArrayOutputStream bo = new ByteArrayOutputStream();
+        final ObjectOutputStream os = new ObjectOutputStream(bo);
+        os.writeObject(block);
+        os.flush();
+
+        assertEquals(block, new ObjectInputStream(new ByteArrayInputStream(bo.toByteArray())).readObject());
     }
 }
