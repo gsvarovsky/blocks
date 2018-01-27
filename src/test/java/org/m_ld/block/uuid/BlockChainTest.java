@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * An overall usage example
  */
-public class UuidBlockChainTest
+public class BlockChainTest
 {
     static class Data implements Serializable
     {
@@ -35,7 +35,7 @@ public class UuidBlockChainTest
     @Test
     public void testOverallUsage()
     {
-        final InMemoryBlockChain<UUID, Data> blockChain = new InMemoryBlockChain<>(UuidChainBlock.<Data>genesis());
+        final InMemoryBlockChain<UUID, Data> blockChain = new InMemoryBlockChain<>(UuidSerialChainBlock.<Data>genesis());
         blockChain.add(new Data("gsvarovsky", "proof-of-work 1"));
         blockChain.add(new Data("gsvarovsky", "proof-of-work 2"));
 
