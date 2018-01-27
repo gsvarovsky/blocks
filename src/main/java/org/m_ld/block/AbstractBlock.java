@@ -41,7 +41,7 @@ public abstract class AbstractBlock<ID, D> implements Block<ID, D>
     @Override
     public String toString()
     {
-        return "AbstractBlock{" +
+        return getClass().getSimpleName() + '{' +
             "id=" + id +
             ", data=" + data +
             '}';

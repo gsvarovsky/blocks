@@ -4,12 +4,7 @@ import org.m_ld.block.AbstractBlock;
 import org.m_ld.block.Block;
 
 import java.io.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
-
-import static com.fasterxml.uuid.Generators.nameBasedGenerator;
-import static com.fasterxml.uuid.Generators.randomBasedGenerator;
 
 /**
  * A block using SHA-256 type 5 UUIDs for block identity, and arbitrary serializable data.
@@ -18,22 +13,9 @@ import static com.fasterxml.uuid.Generators.randomBasedGenerator;
  */
 public class UuidChainBlock<D extends Serializable> extends AbstractBlock<UUID, D> implements Serializable
 {
-    private static final MessageDigest DIGEST;
-    static
-    {
-        try
-        {
-            DIGEST = MessageDigest.getInstance("SHA-256");
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            throw new Error(e);
-        }
-    }
-
     public static <D extends Serializable> Block<UUID, D> genesis()
     {
-        return new UuidChainBlock<>(randomBasedGenerator().generate(), null);
+        return UuidBlocks.genesis(UuidChainBlock::new);
     }
 
     private UuidChainBlock(UUID id, D data)
@@ -71,16 +53,7 @@ public class UuidChainBlock<D extends Serializable> extends AbstractBlock<UUID, 
 
     protected UUID hash(byte[] bytes)
     {
-        return nameBasedGenerator(null, DIGEST).generate(bytes);
-    }
-
-    @Override
-    public String toString()
-    {
-        return getClass().getSimpleName() + "{" +
-            "id=" + id() +
-            ", data=" + data() +
-            "}";
+        return UuidBlocks.hash(bytes);
     }
 
     private Object writeReplace() throws ObjectStreamException
