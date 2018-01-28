@@ -57,6 +57,6 @@ public abstract class UuidBlockTest<D>
     {
         // This is just a smoke test for some crazy mistake
         final Iterator<D> values = values().iterator();
-        assertEquals(100, Stream.iterate(genesis(), b -> b.next(values.next())).limit(100).count());
+        assertEquals(1000, Stream.iterate(genesis(), b -> b.next(values.next())).limit(1000).count());
     }
 }

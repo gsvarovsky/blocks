@@ -2,7 +2,11 @@ package org.m_ld.block.uuid;
 
 import org.m_ld.block.Block;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +19,8 @@ import static com.fasterxml.uuid.impl.UUIDUtil.constructUUID;
 
 public interface UuidBlocks
 {
+    Charset UTF_8 = Charset.forName("UTF-8");
+
     static MessageDigest digest(String algorithm)
     {
         try
@@ -27,11 +33,6 @@ public interface UuidBlocks
         }
     }
 
-    static UUID toUuid(byte[] hash)
-    {
-        return constructUUID(NAME_BASED_SHA1, hash);
-    }
-
     OutputStream IGNORE_OUTPUT = new OutputStream()
     {
         @Override
@@ -39,6 +40,11 @@ public interface UuidBlocks
         {
         }
     };
+
+    static UUID toUuid(byte[] hash)
+    {
+        return constructUUID(NAME_BASED_SHA1, hash);
+    }
 
     static byte[] hash(MessageDigest digest, Serializable... data)
     {
@@ -56,16 +62,11 @@ public interface UuidBlocks
         }
     }
 
-    static byte[] hash(String data)
+    static byte[] hash(MessageDigest digest, String... data)
     {
-        try
-        {
-            return UuidBlocks.digest("SHA-256").digest(data.getBytes("UTF-8"));
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            throw new IllegalStateException("UTF-8 not supported", e);
-        }
+        for (String datum : data)
+            digest.update(datum.getBytes(UTF_8));
+        return digest.digest();
     }
 
     static <D> Block<UUID, D> genesis(BiFunction<UUID, D, Block<UUID, D>> create)

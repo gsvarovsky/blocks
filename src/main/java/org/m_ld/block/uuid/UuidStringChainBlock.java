@@ -4,6 +4,8 @@ import org.m_ld.block.Block;
 
 import java.util.UUID;
 
+import static org.m_ld.block.uuid.UuidBlocks.digest;
+
 /**
  * A {@link UuidChainBlock} using SHA-256 type 5 UUIDs for block identity, and string data.
  */
@@ -28,6 +30,6 @@ public class UuidStringChainBlock extends UuidChainBlock<String>
     @Override
     protected byte[] hash(UUID id, String data)
     {
-        return UuidBlocks.hash(id + data);
+        return UuidBlocks.hash(digest("SHA-256"), id, data);
     }
 }
