@@ -32,7 +32,7 @@ public class UuidSerialChainBlock<D extends Serializable> extends UuidChainBlock
     @Override
     protected byte[] hash(UUID id, D data)
     {
-        return UuidBlocks.hash(digest("SHA-256"), id(), data);
+        return UuidBlocks.hash(digest("SHA-256"), id, data);
     }
 
     private Object writeReplace() throws ObjectStreamException

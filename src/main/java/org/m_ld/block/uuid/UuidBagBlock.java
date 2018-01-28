@@ -6,10 +6,9 @@ import org.m_ld.block.Block;
 import java.math.BigInteger;
 import java.util.UUID;
 
-import static com.fasterxml.uuid.UUIDType.NAME_BASED_SHA1;
 import static com.fasterxml.uuid.impl.UUIDUtil.asByteArray;
-import static com.fasterxml.uuid.impl.UUIDUtil.constructUUID;
-import static java.util.Arrays.copyOf;
+import static org.m_ld.block.uuid.UuidBlocks.toUuid;
+import static org.m_ld.block.uuid.UuidBlocks.truncate;
 
 /**
  * A "BagBlock" is a block for which the chain ordering is unimportant.
@@ -27,7 +26,7 @@ public abstract class UuidBagBlock<D> extends AbstractBlock<UUID, D>
 
     protected UuidBagBlock(BigInteger sum, D data)
     {
-        super(constructUUID(NAME_BASED_SHA1, copyOf(sum.toByteArray(), 16)), data);
+        super(toUuid(truncate(sum.toByteArray())), data);
         this.sum = sum;
     }
 
@@ -40,7 +39,7 @@ public abstract class UuidBagBlock<D> extends AbstractBlock<UUID, D>
     @Override
     public Block<UUID, D> next(D data)
     {
-        return construct(sum.add(new BigInteger(hash(data))), data);
+        return construct(sum.add(new BigInteger(truncate(hash(data)))), data);
     }
 
     protected abstract Block<UUID, D> construct(BigInteger sum, D data);

@@ -9,8 +9,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public abstract class UuidBagBlockTest<D> extends UuidBlockTest<D>
 {
@@ -31,10 +30,16 @@ public abstract class UuidBagBlockTest<D> extends UuidBlockTest<D>
 
         assertTrue(Stream.generate(() -> {
             Collections.shuffle(values);
-            return values.stream().reduce(genesis, Block::next, (b1, b2) -> b1);
+            return values.stream().reduce(genesis, Block::next, (b1, b2) -> unexpected());
         }).limit(10).reduce((b1, b2) -> {
             assertEquals(b1, b2);
             return b2;
         }).isPresent());
+    }
+
+    private <T> T unexpected()
+    {
+        fail();
+        return null;
     }
 }

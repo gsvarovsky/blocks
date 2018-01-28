@@ -16,6 +16,7 @@ import java.util.function.BiFunction;
 import static com.fasterxml.uuid.Generators.randomBasedGenerator;
 import static com.fasterxml.uuid.UUIDType.NAME_BASED_SHA1;
 import static com.fasterxml.uuid.impl.UUIDUtil.constructUUID;
+import static java.util.Arrays.copyOf;
 
 public interface UuidBlocks
 {
@@ -72,5 +73,11 @@ public interface UuidBlocks
     static <D> Block<UUID, D> genesis(BiFunction<UUID, D, Block<UUID, D>> create)
     {
         return create.apply(randomBasedGenerator().generate(), null);
+    }
+
+    static byte[] truncate(byte[] hash)
+    {
+        // UUID can only cope with 16 bytes, anything bigger is wasted space
+        return copyOf(hash, 16);
     }
 }
