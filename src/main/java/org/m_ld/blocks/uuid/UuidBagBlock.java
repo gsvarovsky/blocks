@@ -1,14 +1,14 @@
-package org.m_ld.block.uuid;
+package org.m_ld.blocks.uuid;
 
-import org.m_ld.block.AbstractBlock;
-import org.m_ld.block.Block;
+import org.m_ld.blocks.AbstractBlock;
+import org.m_ld.blocks.Block;
 
 import java.math.BigInteger;
 import java.util.UUID;
 
 import static com.fasterxml.uuid.impl.UUIDUtil.asByteArray;
-import static org.m_ld.block.uuid.UuidBlocks.toUuid;
-import static org.m_ld.block.uuid.UuidBlocks.truncate;
+import static org.m_ld.blocks.uuid.UuidBlocks.toUuid;
+import static org.m_ld.blocks.uuid.UuidBlocks.truncate;
 
 /**
  * A "BagBlock" is a block for which the chain ordering is unimportant.

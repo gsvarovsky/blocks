@@ -1,4 +1,4 @@
-package org.m_ld.block;
+package org.m_ld.blocks;
 
 public abstract class AbstractBlock<ID, D> implements Block<ID, D>
 {

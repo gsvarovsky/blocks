@@ -1,4 +1,4 @@
-package org.m_ld.block;
+package org.m_ld.blocks;
 
 /**
  * A block in a blockchain. Encapsulates data (or a hash of data) and an identity

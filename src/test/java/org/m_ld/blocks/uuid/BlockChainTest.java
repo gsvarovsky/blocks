@@ -1,7 +1,7 @@
-package org.m_ld.block.uuid;
+package org.m_ld.blocks.uuid;
 
 import org.junit.Test;
-import org.m_ld.block.InMemoryBlockChain;
+import org.m_ld.blocks.InMemoryBlockChain;
 
 import java.io.Serializable;
 import java.util.Date;

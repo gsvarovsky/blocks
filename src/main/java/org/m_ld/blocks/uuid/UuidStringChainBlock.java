@@ -1,10 +1,10 @@
-package org.m_ld.block.uuid;
+package org.m_ld.blocks.uuid;
 
-import org.m_ld.block.Block;
+import org.m_ld.blocks.Block;
 
 import java.util.UUID;
 
-import static org.m_ld.block.uuid.UuidBlocks.digest;
+import static org.m_ld.blocks.uuid.UuidBlocks.digest;
 
 /**
  * A {@link UuidChainBlock} using SHA-256 type 5 UUIDs for block identity, and string data.

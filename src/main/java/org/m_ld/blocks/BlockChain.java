@@ -1,4 +1,4 @@
-package org.m_ld.block;
+package org.m_ld.blocks;
 
 import java.util.List;
 

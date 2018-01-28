@@ -1,6 +1,6 @@
-package org.m_ld.block.uuid;
+package org.m_ld.blocks.uuid;
 
-import org.m_ld.block.Block;
+import org.m_ld.blocks.Block;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

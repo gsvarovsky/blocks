@@ -1,4 +1,4 @@
-package org.m_ld.block;
+package org.m_ld.blocks;
 
 import org.junit.Before;
 import org.junit.Test;
