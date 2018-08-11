@@ -1,6 +1,7 @@
 package org.m_ld.blocks;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A blockchain representation that implements {@link List} for convenience.
@@ -15,13 +16,13 @@ import java.util.List;
 public interface BlockChain<ID, D> extends List<D>
 {
     /**
-     * @return the actual blocks that make up this blockchain, as an immutable list.
+     * @return the actual blocks that make up this blockchain.
      */
-    List<Block<ID, D>> blocks();
+    Stream<Block<ID, D>> blocks();
 
     default Block<ID, D> verify() throws IllegalStateException
     {
-        return blocks().stream().reduce((b1, b2) -> {
+        return blocks().reduce((b1, b2) -> {
             if (!b1.next(b2.data()).equals(b2))
                 throw new IllegalStateException("Block chain is inconsistent");
             return b2;

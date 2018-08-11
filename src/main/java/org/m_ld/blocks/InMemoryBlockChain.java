@@ -3,9 +3,9 @@ package org.m_ld.blocks;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.Collections.singleton;
-import static java.util.Collections.unmodifiableList;
 
 public class InMemoryBlockChain<ID, D> extends AbstractList<D> implements BlockChain<ID, D>
 {
@@ -40,9 +40,9 @@ public class InMemoryBlockChain<ID, D> extends AbstractList<D> implements BlockC
     }
 
     @Override
-    public List<Block<ID, D>> blocks()
+    public Stream<Block<ID, D>> blocks()
     {
-        return unmodifiableList(blocks);
+        return blocks.stream();
     }
 
     @Override

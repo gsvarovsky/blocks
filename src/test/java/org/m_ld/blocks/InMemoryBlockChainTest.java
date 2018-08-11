@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class InMemoryBlockChainTest
@@ -23,8 +24,8 @@ public class InMemoryBlockChainTest
     {
         final InMemoryBlockChain<UUID, Integer> chain = new InMemoryBlockChain<>(genesis);
         assertEquals(1, chain.size());
-        assertEquals(null, chain.get(0));
-        assertEquals(null, chain.blocks().get(0).data());
+        assertNull(chain.get(0));
+        assertNull(chain.blocks().findFirst().orElseThrow(AssertionError::new).data());
     }
 
     @Test
@@ -34,10 +35,10 @@ public class InMemoryBlockChainTest
         chain.add(1);
 
         assertEquals(2, chain.size());
-        assertEquals(null, chain.get(0));
-        assertEquals(null, chain.blocks().get(0).data());
+        assertNull(chain.get(0));
+        assertNull(chain.blocks().findFirst().orElseThrow(AssertionError::new).data());
         assertEquals(1, (int)chain.get(1));
-        assertEquals(1, (int)chain.blocks().get(1).data());
+        assertEquals(1, (int)chain.blocks().skip(1).findFirst().orElseThrow(AssertionError::new).data());
     }
 
     @Test
@@ -51,9 +52,9 @@ public class InMemoryBlockChainTest
         final InMemoryBlockChain<UUID, Integer> subchain = chain.subList(1, 3);
         assertEquals(2, subchain.size());
         assertEquals(1, (int)subchain.get(0));
-        assertEquals(1, (int)subchain.blocks().get(0).data());
+        assertEquals(1, (int)subchain.blocks().findFirst().orElseThrow(AssertionError::new).data());
         assertEquals(2, (int)subchain.get(1));
-        assertEquals(2, (int)subchain.blocks().get(1).data());
+        assertEquals(2, (int)subchain.blocks().skip(1).findFirst().orElseThrow(AssertionError::new).data());
     }
 
     @Test
@@ -86,7 +87,7 @@ public class InMemoryBlockChainTest
 
     class TestBlock extends AbstractBlock<UUID, Integer>
     {
-        private TestBlock()
+        TestBlock()
         {
             this(UUID.randomUUID(), null);
         }
