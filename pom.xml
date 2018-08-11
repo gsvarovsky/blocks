@@ -6,7 +6,7 @@
 
     <groupId>org.m-ld</groupId>
     <artifactId>blocks</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>a blockchain building blocks library</description>
