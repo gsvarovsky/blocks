@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/gsvarovsky/blocks.svg?branch=master)](https://travis-ci.org/gsvarovsky/blocks)
+![stability-wip](https://img.shields.io/badge/stability-work_in_progress-lightgrey.svg)
 
 # blocks
 _a blockchain building blocks library_
