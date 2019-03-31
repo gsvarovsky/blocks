@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) George Svarovsky 2019. All rights reserved.
+ * Licensed under the MIT License. See LICENSE file in the project root for full license information.
+ */
+
 package org.m_ld.blocks.uuid;
 
 import org.junit.Test;
@@ -35,7 +40,7 @@ public class BlockChainTest
     @Test
     public void testOverallUsage()
     {
-        final InMemoryBlockChain<UUID, Data> blockChain = new InMemoryBlockChain<>(UuidSerialChainBlock.<Data>genesis());
+        final InMemoryBlockChain<UUID, Data> blockChain = new InMemoryBlockChain<>(UuidSerialChainBlock.genesis());
         blockChain.add(new Data("gsvarovsky", "proof-of-work 1"));
         blockChain.add(new Data("gsvarovsky", "proof-of-work 2"));
 
