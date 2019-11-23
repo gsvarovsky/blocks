@@ -3,10 +3,10 @@
  * Licensed under the MIT License. See LICENSE file in the project root for full license information.
  */
 
-package org.m_ld.blocks.uuid;
+package org.m_ld.blocks;
 
 import org.junit.Test;
-import org.m_ld.blocks.InMemoryBlockChain;
+import org.m_ld.blocks.uuid.UuidSerialChainBlock;
 
 import java.io.Serializable;
 import java.util.Date;

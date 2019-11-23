@@ -7,6 +7,7 @@ package org.m_ld.blocks.uuid;
 
 import org.junit.Test;
 import org.m_ld.blocks.Block;
+import org.m_ld.blocks.BlockTest;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertNotEquals;
 
-public abstract class UuidChainBlockTest<D> extends UuidBlockTest<D>
+public abstract class UuidChainBlockTest<D> extends BlockTest<UUID, D>
 {
     @Test
     public void testBranchesWithSameDataDifferentOrder()

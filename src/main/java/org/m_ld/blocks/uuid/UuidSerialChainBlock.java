@@ -6,12 +6,13 @@
 package org.m_ld.blocks.uuid;
 
 import org.m_ld.blocks.Block;
+import org.m_ld.blocks.hash.Hash;
 
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.UUID;
 
-import static org.m_ld.blocks.uuid.UuidBlocks.digest;
+import static java.util.UUID.randomUUID;
 
 /**
  * A {@link UuidChainBlock} using SHA-256 type 5 UUIDs for block identity, and arbitrary serializable data.
@@ -20,7 +21,7 @@ public class UuidSerialChainBlock<D extends Serializable> extends UuidChainBlock
 {
     public static <D extends Serializable> Block<UUID, D> genesis()
     {
-        return UuidBlocks.genesis(UuidSerialChainBlock::new);
+        return new UuidSerialChainBlock<>(randomUUID(), null);
     }
 
     private UuidSerialChainBlock(UUID id, D data)
@@ -35,9 +36,9 @@ public class UuidSerialChainBlock<D extends Serializable> extends UuidChainBlock
     }
 
     @Override
-    protected byte[] hash(UUID id, D data)
+    protected Hash hash(UUID id, D data)
     {
-        return UuidBlocks.hash(digest("SHA-256"), id, data);
+        return Hash.digest(id, data);
     }
 
     private Object writeReplace() throws ObjectStreamException

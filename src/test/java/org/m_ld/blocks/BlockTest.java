@@ -3,22 +3,20 @@
  * Licensed under the MIT License. See LICENSE file in the project root for full license information.
  */
 
-package org.m_ld.blocks.uuid;
+package org.m_ld.blocks;
 
 import org.junit.Test;
-import org.m_ld.blocks.Block;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.*;
 
-public abstract class UuidBlockTest<D>
+public abstract class BlockTest<ID, D>
 {
-    protected abstract Block<UUID, D> genesis();
+    protected abstract Block<ID, D> genesis();
 
     protected abstract Stream<D> values();
 
@@ -52,7 +50,7 @@ public abstract class UuidBlockTest<D>
     public void testBranchesWithSameData()
     {
         final List<D> values = values().limit(2).collect(toList());
-        final Block<UUID, D> genesis = genesis();
+        final Block<ID, D> genesis = genesis();
         assertEquals(genesis.next(values.get(0)), genesis.next(values.get(0)));
         assertEquals(genesis.next(values.get(0)).next(values.get(1)), genesis.next(values.get(0)).next(values.get(1)));
     }

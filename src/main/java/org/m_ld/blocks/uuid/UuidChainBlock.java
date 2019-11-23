@@ -7,10 +7,13 @@ package org.m_ld.blocks.uuid;
 
 import org.m_ld.blocks.AbstractBlock;
 import org.m_ld.blocks.Block;
+import org.m_ld.blocks.hash.Hash;
 
 import java.util.UUID;
 
-import static org.m_ld.blocks.uuid.UuidBlocks.toUuid;
+import static com.fasterxml.uuid.UUIDType.RANDOM_BASED;
+import static com.fasterxml.uuid.impl.UUIDUtil.constructUUID;
+import static org.m_ld.blocks.hash.Hash.toWidth;
 
 /**
  * A block with normal block-chain semantics.
@@ -35,7 +38,13 @@ public abstract class UuidChainBlock<D> extends AbstractBlock<UUID, D>
         return construct(toUuid(hash(id(), data)), data);
     }
 
+    public static UUID toUuid(Hash hash)
+    {
+        // UUID can only cope with 16 bytes, anything bigger is wasted space
+        return constructUUID(RANDOM_BASED, toWidth(hash.toBytes(), 16));
+    }
+
     protected abstract Block<UUID, D> construct(UUID newId, D data);
 
-    protected abstract byte[] hash(UUID id, D data);
+    protected abstract Hash hash(UUID id, D data);
 }

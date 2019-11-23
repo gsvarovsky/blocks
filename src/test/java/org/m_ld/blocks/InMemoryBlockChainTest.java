@@ -90,7 +90,7 @@ public class InMemoryBlockChainTest
         chain.verify();
     }
 
-    class TestBlock extends AbstractBlock<UUID, Integer>
+    static class TestBlock extends AbstractBlock<UUID, Integer>
     {
         TestBlock()
         {

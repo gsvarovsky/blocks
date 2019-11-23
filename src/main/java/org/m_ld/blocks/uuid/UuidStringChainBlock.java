@@ -6,10 +6,11 @@
 package org.m_ld.blocks.uuid;
 
 import org.m_ld.blocks.Block;
+import org.m_ld.blocks.hash.Hash;
 
 import java.util.UUID;
 
-import static org.m_ld.blocks.uuid.UuidBlocks.digest;
+import static java.util.UUID.randomUUID;
 
 /**
  * A {@link UuidChainBlock} using SHA-256 type 5 UUIDs for block identity, and string data.
@@ -18,7 +19,7 @@ public class UuidStringChainBlock extends UuidChainBlock<String>
 {
     public static Block<UUID, String> genesis()
     {
-        return UuidBlocks.genesis(UuidStringChainBlock::new);
+        return new UuidStringChainBlock(randomUUID(), null);
     }
 
     private UuidStringChainBlock(UUID id, String data)
@@ -33,8 +34,8 @@ public class UuidStringChainBlock extends UuidChainBlock<String>
     }
 
     @Override
-    protected byte[] hash(UUID id, String data)
+    protected Hash hash(UUID id, String data)
     {
-        return UuidBlocks.hash(digest("SHA-256"), id, data);
+        return Hash.digest(id, data);
     }
 }
