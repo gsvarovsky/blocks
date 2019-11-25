@@ -17,6 +17,11 @@ public class HashStringBagBlock extends HashBagBlock<String>
         return new HashStringBagBlock(Hash.random(), null);
     }
 
+    public static Block<Hash, String> genesis(String seed)
+    {
+        return new HashStringBagBlock(Hash.digest(seed), null);
+    }
+
     private HashStringBagBlock(Hash id, String data)
     {
         super(id, data);
